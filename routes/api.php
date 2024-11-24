@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LiveTestController;
 use App\Http\Controllers\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('messages', MessageController::class);
+Route::get('live-test', LiveTestController::class);
