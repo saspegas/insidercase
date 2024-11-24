@@ -19,7 +19,6 @@ interface MessageInterface
 
     public function markAsSent(int $id): Message;
 
-    public function markAsFailed(int $id): Message;
-    
-    public function markAsAttempted(int $id): Message;
+    public function getMessagesToQueue(): Collection;
+
 }

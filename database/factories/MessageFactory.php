@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\MessageStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,7 @@ class MessageFactory extends Factory
         return [
             'recipient' => fake()->e164PhoneNumber(),
             'text' => fake()->sentence(rand(1, 10)),
-            'status' => 'created',
+            'status' => MessageStatus::New,
         ];
     }
 }

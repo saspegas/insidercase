@@ -2,6 +2,7 @@
 
 namespace App\Services\Repositories;
 
+use App\Enums\MessageStatus;
 use App\Models\Message;
 use Illuminate\Support\Collection;
 use App\Services\Interfaces\MessageInterface;
@@ -36,30 +37,15 @@ class MessageRepository implements MessageInterface
     public function markAsSent(int $id): Message
     {
         $message = Message::find($id);
-        $message->status = 'sent';
+        $message->status = MessageStatus::Sent;
         $message->attempted_at = now();
         $message->save();
 
         return $message;
     }
 
-    public function markAsFailed(int $id): Message
+    public function getMessagesToQueue(): Collection
     {
-        $message = Message::find($id);
-        $message->status = 'failed';
-        $message->attempted_at = now();
-        $message->save();
-
-        return $message;
-    }
-
-    public function markAsAttempted(int $id): Message
-    {
-        $message = Message::find($id);
-        $message->status = 'attempted';
-        $message->attempted_at = now();
-        $message->save();
-
-        return $message;
+        return Message::where('status', MessageStatus::New)->get();
     }
 }
