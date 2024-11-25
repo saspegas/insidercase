@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Services\Interfaces\MessageInterface;
+
 class MessageController extends Controller
 {
     /**
@@ -43,7 +45,7 @@ class MessageController extends Controller
         return response()->json($this->message->find($id));
     }
 
-    public function store($request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
         $this->message->store($request->all());
 
@@ -56,7 +58,7 @@ class MessageController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function update($request, int $id): JsonResponse
+    public function update(Request $request, int $id): JsonResponse
     {
         $this->message->update($id, $request->all());
 
