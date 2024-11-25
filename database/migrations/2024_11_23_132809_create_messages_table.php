@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('status', 20);
             $table->integer('parts_count')->nullable();
             $table->string('message_id')->nullable();
-            $table->timestamp('attempted_at')->nullable();
             $table->timestamp('sent_at')->nullable();
             $table->timestamps();
         });

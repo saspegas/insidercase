@@ -34,16 +34,6 @@ class MessageRepository implements MessageInterface
         return Message::destroy($id);
     }
 
-    public function markAsSent(int $id): Message
-    {
-        $message = Message::find($id);
-        $message->status = MessageStatus::Sent;
-        $message->attempted_at = now();
-        $message->save();
-
-        return $message;
-    }
-
     public function getMessagesToQueue(): Collection
     {
         return Message::newMessages()->get();

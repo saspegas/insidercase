@@ -17,8 +17,6 @@ interface MessageInterface
 
     public function delete(int $id): bool;
 
-    public function markAsSent(int $id): Message;
-
     public function getMessagesToQueue(): Collection;
 
     public function setMessagesAsQueued(): int;

@@ -55,7 +55,7 @@ class AddMessagesToQueue extends Command
         $messagesToQueue = $this->repository->getMessagesToQueue();
 
         $messagesToQueue->each(function ($message) {
-            SendSms::dispatch($this->sendSmsService, $message->recipient, $message->text);
+            SendSms::dispatch($this->sendSmsService, $message->id, $message->recipient, $message->text)->onQueue('sms');
         });
 
         $count = $this->repository->setMessagesAsQueued();
