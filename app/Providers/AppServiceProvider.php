@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Message;
+use App\Observers\MessageObserver;
 use Illuminate\Support\ServiceProvider;
 use App\Providers\MessageServiceProvider;
 
@@ -22,5 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->register(MessageServiceProvider::class);
         $this->app->register(SmsServiceProvider::class);
+
+        Message::observe(MessageObserver::class);
     }
 }
