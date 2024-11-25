@@ -21,4 +21,5 @@ interface MessageInterface
 
     public function getMessagesToQueue(): Collection;
 
+    public function setMessagesAsQueued(): int;
 }

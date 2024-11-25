@@ -46,6 +46,11 @@ class MessageRepository implements MessageInterface
 
     public function getMessagesToQueue(): Collection
     {
-        return Message::where('status', MessageStatus::New)->get();
+        return Message::newMessages()->get();
+    }
+
+    public function setMessagesAsQueued(): int
+    {
+        return Message::newMessages()->update(['status' => MessageStatus::Queued]);
     }
 }

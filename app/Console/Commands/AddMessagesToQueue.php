@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\SendSms;
 use Illuminate\Console\Command;
 use App\Services\Interfaces\MessageInterface;
 use App\Services\Repositories\MessageRepository;
+use App\Services\Interfaces\SendSmsServiceInterface;
 
 class AddMessagesToQueue extends Command
 {
@@ -28,15 +30,21 @@ class AddMessagesToQueue extends Command
     protected $repository;
 
     /**
+     * @var SendSmsServiceInterface
+     */
+    protected $sendSmsService;
+
+    /**
      * Create a new command instance.
      *
      * @param MessageRepository $repository
      * @return void
      */
-    public function __construct(MessageInterface $repository)
+    public function __construct(MessageInterface $repository, SendSmsServiceInterface $sendSmsService)
     {
         parent::__construct();
         $this->repository = $repository;
+        $this->sendSmsService = $sendSmsService;
     }
 
     /**
@@ -46,6 +54,12 @@ class AddMessagesToQueue extends Command
     {
         $messagesToQueue = $this->repository->getMessagesToQueue();
 
-        // add messages to the queue
+        $messagesToQueue->each(function ($message) {
+            SendSms::dispatch($this->sendSmsService, $message->recipient, $message->text);
+        });
+
+        $count = $this->repository->setMessagesAsQueued();
+
+        $this->info("Added {$count} messages to the queue");
     }
 }
